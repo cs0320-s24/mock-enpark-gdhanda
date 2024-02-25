@@ -1,0 +1,45 @@
+.repl {
+    position:absolute;
+    left: 0px;
+    top: 220px;
+    width: 100%;
+    min-height:75vh;    
+    background-color: lightblue;
+}
+
+.repl-history {      
+    height:55vh;   
+    margin: auto;
+    display: block;
+    overflow: scroll;    
+}
+
+.repl-input {        
+    margin: auto;    
+    height:50px;
+}
+
+.repl-command-box {
+    width: 60%;            
+    margin: auto;
+    display: block;
+    background-color: white;
+    border: none;
+    height: 35px;
+    border-radius: 25px;
+    /* border-width: 2px;
+    border-color: #282c34;
+    border-style: solid; */
+}
+
+fieldset{
+    border: none;
+}
+
+.submit-button {
+    background-color: rgb(223, 223, 223);
+    border-radius: 25px;
+    height: 40px;
+    width: 165px;
+    font-size: 14px;
+}

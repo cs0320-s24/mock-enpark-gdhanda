@@ -1,0 +1,19 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+}
+
+.App-header {
+  position: absolute;
+  left: 0px;
+  top: -10px;
+  width: 100%;
+  background-color: #282c34;
+  min-height: 8vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(1px + 2vmin);
+  color: white;
+}
