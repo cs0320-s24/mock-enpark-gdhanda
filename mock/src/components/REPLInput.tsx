@@ -1,12 +1,15 @@
 import "../styles/repl.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "./ControlledInput";
+import { REPLFunction } from "./REPL";
 
 interface REPLInputProps {
   history: string[][];
   setHistory: Dispatch<SetStateAction<string[][]>>;
   setOutputMode: Dispatch<SetStateAction<boolean>>;
+  commandMap: Map<string, REPLFunction>;
 }
+
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
 export function REPLInput(props: REPLInputProps) {
@@ -42,15 +45,21 @@ export function REPLInput(props: REPLInputProps) {
       } else {
         const output = "Mode updated: " + commandArray[1] + "!";
         props.setHistory([...props.history, [commandString, output]]);
-        props.setOutputMode((commandArray[1] == "brief"));
+        props.setOutputMode(commandArray[1] == "brief");
       }
     }
-    // Otherwise use the inputted function.
+    // Otherwise use the given function.
     else {
-      props.setHistory([
-        ...props.history,
-        [commandString, "<temporary output>"],
-      ]);
+      const result = props.commandMap.get(commandArray[0]);
+      if (result != null) {
+        const output = result(["test"]);
+        props.setHistory([...props.history, [commandString, output]]);
+      } else {
+        props.setHistory([
+          ...props.history,
+          [commandString, "Invalid Command!"],
+        ]);
+      }
     }
 
     setCommandString("");
