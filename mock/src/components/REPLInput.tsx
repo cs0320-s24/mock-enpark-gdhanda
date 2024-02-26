@@ -23,17 +23,18 @@ export function REPLInput(props: REPLInputProps) {
     const commandArray = commandString.trim().split(" ");
 
     // Check if no command was specified
-    if (commandArray[0] == "") {
+    const command = commandArray[0].toLowerCase();
+    if (command == "") {
       props.setHistory([
         ...props.history,
         [commandString, "Please specify a command!"],
       ]);
     }
     // Check if the mode was changed
-    else if (commandArray[0] == "mode") {
+    else if (command == "mode") {
       if (
         commandArray.length != 2 ||
-        !(commandArray[1] == "verbose" || commandArray[1] == "brief")
+        !(commandArray[1].toLowerCase() == "verbose" || commandArray[1].toLowerCase() == "brief")
       ) {
         props.setHistory([
           ...props.history,

@@ -5,7 +5,8 @@
 
 .App-header {
   top: -10px;
-  width: 100%;
+  left: 1%;
+  width: 98%;
   position: absolute;
   background-color: #2d333f;
   min-height: 8vh;
