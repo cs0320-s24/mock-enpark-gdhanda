@@ -17,7 +17,7 @@ export function LoginButton(props: loginProps) {
 
   if (props.isLoggedIn) {
     return (
-      <button className='login-button' aria-label='Sign Out' onClick={authenticate}>Sign out</button>
+      <button className='login-button' aria-label='Sign Out' onClick={authenticate}>Sign Out</button>
     )
   } else {
     return (

@@ -1,7 +1,7 @@
 .repl {
   position: absolute;
   left: 0px;
-  top: 220px;
+  top: 225px;
   width: 100%;
   min-height: 75vh;
   background-color: lightblue;
@@ -15,14 +15,16 @@
 }
 
 .mode-button {
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 5px;
-  height: 33px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 12px;
+  height: auto;
   font-size: small;
   position: absolute;
   left: 23%;
   top: 15px;
+  border-color: rgb(67, 191, 203);
+  border-width: 3px;
 }
 
 .repl-input {

@@ -27,9 +27,8 @@ function App() {
           </h3>
         )}
         <LoginButton isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        {isLoggedIn && <REPL />}
       </p>
-
-      {isLoggedIn && <REPL />}
     </div>
   );
 }

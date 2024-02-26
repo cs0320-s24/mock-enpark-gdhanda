@@ -3,29 +3,14 @@ import "../styles/main.css";
 
 interface REPLHistoryProps {
   history: string[][];
+  outputMode: boolean;
 }
 export function REPLHistory(props: REPLHistoryProps) {
-  const [outputMode, setOutputMode] = useState<string>("brief");
-
-  /**
-   * Function to switch the output mode between brief and verbose
-   */
-  const changeMode = () => {
-    if (outputMode == "brief") {
-      setOutputMode("verbose");
-    } else {
-      setOutputMode("brief");
-    }
-  };
 
   // return with only output showing
-  if (outputMode == "brief") {
+  if (props.outputMode) {
     return (
       <div className="repl-history">
-        <button className="mode-button" onClick={changeMode}>
-          {" "}
-          <b>Mode:</b> Brief{" "}
-        </button>
         {props.history.map((command) => (
           <p> {command[1]} </p>
         ))}
@@ -36,15 +21,10 @@ export function REPLHistory(props: REPLHistoryProps) {
   else {
     return (
       <div className="repl-history">
-        <button className="mode-button" onClick={changeMode}>
-          {" "}
-          <b>Mode:</b> Verbose{" "}
-        </button>
         {props.history.map((command) => (
           <p>
-            {" "}
-            <b>Command:</b> {command[0]} <br></br>
-            <b>Output:</b> {command[1]}{" "}
+            <b>{"Command:"}</b> {command[0]} <br></br>
+            <b>{"Output:"}</b> {command[1]}
           </p>
         ))}
       </div>

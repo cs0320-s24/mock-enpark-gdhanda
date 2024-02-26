@@ -5,6 +5,7 @@ import { ControlledInput } from "./ControlledInput";
 interface REPLInputProps {
   history: string[][];
   setHistory: Dispatch<SetStateAction<string[][]>>;
+  setOutputMode: Dispatch<SetStateAction<boolean>>;
 }
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
@@ -12,7 +13,6 @@ export function REPLInput(props: REPLInputProps) {
   // Remember: let React manage state in your webapp.
   // Manages the contents of the input box
   const [commandString, setCommandString] = useState<string>("");
-  const [count, setCount] = useState<number>(0);
 
   /**
    * We suggest breaking down this component into smaller components, think about the individual pieces
@@ -20,11 +20,39 @@ export function REPLInput(props: REPLInputProps) {
    */
 
   function handleSubmit(commandString: string) {
-    setCount(count + 1);
-    props.setHistory([
-      ...props.history,
-      [commandString, "<temporary output result>"],
-    ]);
+    const commandArray = commandString.trim().split(" ");
+
+    // Check if no command was specified
+    if (commandArray[0] == "") {
+      props.setHistory([
+        ...props.history,
+        [commandString, "Please specify a command!"],
+      ]);
+    }
+    // Check if the mode was changed
+    else if (commandArray[0] == "mode") {
+      if (
+        commandArray.length != 2 ||
+        !(commandArray[1] == "verbose" || commandArray[1] == "brief")
+      ) {
+        props.setHistory([
+          ...props.history,
+          [commandString, "Usage: mode <verbose> OR mode <brief>."],
+        ]);
+      } else {
+        const output = "Mode updated: " + commandArray[1] + "!";
+        props.setHistory([...props.history, [commandString, output]]);
+        props.setOutputMode((commandArray[1] == "brief"));
+      }
+    }
+    // Otherwise use the inputted function.
+    else {
+      props.setHistory([
+        ...props.history,
+        [commandString, "<temporary output>"],
+      ]);
+    }
+
     setCommandString("");
   }
 
@@ -46,8 +74,7 @@ export function REPLInput(props: REPLInputProps) {
         className="submit-button"
         onClick={() => handleSubmit(commandString)}
       >
-        {" "}
-        Submitted {count} Times!{" "}
+        {"Submit!"}
       </button>
     </div>
   );
