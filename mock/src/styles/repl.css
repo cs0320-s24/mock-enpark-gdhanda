@@ -14,22 +14,32 @@
     overflow: scroll;    
 }
 
+.mode-button {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    height: 33px;
+    font-size: small;
+    position: absolute;
+    left: 23%;
+    top: 15px;
+}
+
 .repl-input {        
     margin: auto;    
     height:50px;
 }
 
 .repl-command-box {
-    width: 60%;            
+    width: 55%;            
     margin: auto;
     display: block;
     background-color: white;
     border: none;
-    height: 35px;
+    height: 37px;
     border-radius: 25px;
-    /* border-width: 2px;
-    border-color: #282c34;
-    border-style: solid; */
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 fieldset{
