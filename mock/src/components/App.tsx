@@ -1,29 +1,29 @@
-import { useState } from 'react';
-import '../styles/App.css';
-import { LoginButton } from './LoginButton';
-import REPL from './REPL';
+import { useState } from "react";
+import "../styles/App.css";
+import { LoginButton } from "./LoginButton";
+import REPL from "./REPL";
 
 /**
  * This is the highest level component!
  */
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  let headerHeight = '100vh';
+  let headerHeight = "100vh";
   if (isLoggedIn) {
-    headerHeight = '215px';
+    headerHeight = "215px";
   }
   return (
     <div className="App">
-      <p className="App-header" style={{height: headerHeight}}>
+      <p className="App-header" style={{ height: headerHeight }}>
         <h1 style={{ position: "absolute", top: "0px" }}>Welcome!</h1>
         {isLoggedIn && (
           <h3 style={{ position: "absolute", top: "80px" }}>
-            (Enter your command below)
+            (Enter Your Command Below)
           </h3>
         )}
         {!isLoggedIn && (
           <h3 style={{ position: "absolute", top: "80px" }}>
-            (Please login to continue)
+            (Please Login to Continue)
           </h3>
         )}
         <LoginButton isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
