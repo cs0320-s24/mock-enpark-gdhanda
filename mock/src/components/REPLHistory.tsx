@@ -2,11 +2,10 @@ import { useState } from "react";
 import "../styles/main.css";
 
 interface REPLHistoryProps {
-  history: string[][];
+  history: [string, string | string[][]][];
   outputMode: boolean;
 }
 export function REPLHistory(props: REPLHistoryProps) {
-
   // return with only output showing
   if (props.outputMode) {
     return (

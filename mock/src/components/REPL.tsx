@@ -13,9 +13,12 @@ import { REPLFunctions } from "./REPLFunctions";
 */
 
 export default function REPL() {
-  const [historyList, setHistoryList] = useState<string[][]>([]);
+  const [historyList, setHistoryList] = useState<
+    [string, string | string[][]][]
+  >([]);
   const [outputMode, setOutputMode] = useState<boolean>(true);
-  const commandMap = REPLFunctions();
+  const [fileLoaded, setFileLoaded] = useState<boolean>(false);
+  const commandMap = REPLFunctions({ fileLoaded, setFileLoaded });
 
   return (
     <div className="repl">

@@ -4,7 +4,7 @@
   top: 225px;
   width: 100%;
   min-height: 71vh;
-  background-color: lightblue;
+  background-color: rgb(162, 215, 233);
   border-radius: 75px;
 }
 
@@ -13,19 +13,6 @@
   margin: auto;
   display: block;
   overflow: scroll;
-}
-
-.mode-button {
-  padding-left: 16px;
-  padding-right: 16px;
-  border-radius: 12px;
-  height: auto;
-  font-size: small;
-  position: absolute;
-  left: 23%;
-  top: 15px;
-  border-color: rgb(67, 191, 203);
-  border-width: 3px;
 }
 
 .repl-input {
@@ -38,22 +25,30 @@
   margin: auto;
   display: block;
   background-color: white;
-  border: none;
   height: 37px;
   border-radius: 25px;
+  border-width: 4px;
   padding-left: 15px;
   padding-right: 15px;
   color: cadetblue;
+  border-color: aqua;
+}
+
+input:focus {
+  outline: none;
+  border-color: rgb(0, 204, 255);;
 }
 
 fieldset {
-  border: none;
+  border-style: none;
 }
 
 .submit-button {
-  background-color: rgb(223, 223, 223);
+  background-color: rgb(131, 170, 209);
   border-radius: 25px;
   height: 40px;
-  width: 165px;
+  width: 130px;
   font-size: 14px;
+  border-width: 4px;
+  border-color: rgb(101, 128, 183);
 }

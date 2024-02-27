@@ -30,7 +30,7 @@ export function REPLInput(props: REPLInputProps) {
       args[i] = args[i].toLowerCase();
     }
 
-// Check if no command was specified
+    // Check if no command was specified
     if (commandArray[0] == "") {
       props.setHistory([
         ...props.history,
@@ -39,8 +39,10 @@ export function REPLInput(props: REPLInputProps) {
     }
     // Check if the mode was changed
     else if (command == "mode") {
-      if (commandArray.length != 2 ||
-        !(args[0] == "verbose" || args[0] == "brief")) {
+      if (
+        commandArray.length != 2 ||
+        !(args[0] == "verbose" || args[0] == "brief")
+      ) {
         props.setHistory([
           ...props.history,
           [commandString, "Usage: mode <verbose> OR mode <brief>."],
@@ -48,7 +50,7 @@ export function REPLInput(props: REPLInputProps) {
       } else {
         const output = "Mode updated: " + args[0] + "!";
         props.setHistory([...props.history, [commandString, output]]);
-        props.setOutputMode((args[0] == "brief"));
+        props.setOutputMode(args[0] == "brief");
       }
     }
     // Otherwise use the given function.
@@ -58,7 +60,6 @@ export function REPLInput(props: REPLInputProps) {
 
     setCommandString("");
   }
-
 
   /**
    * Helper function to call the correct commands based on user input
@@ -70,8 +71,7 @@ export function REPLInput(props: REPLInputProps) {
     if (result != null) {
       const output = result(args);
       props.setHistory([...props.history, [commandString, output]]);
-    }
-    else {
+    } else {
       props.setHistory([...props.history, [commandString, "Invalid Command!"]]);
     }
   }
@@ -94,7 +94,7 @@ export function REPLInput(props: REPLInputProps) {
         className="submit-button"
         onClick={() => handleSubmit(commandString)}
       >
-        {"Submit!"}
+        <b>{"Submit!"}</b>
       </button>
     </div>
   );
