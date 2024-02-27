@@ -1,15 +1,14 @@
 import "../styles/repl.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "./ControlledInput";
-import { REPLFunction } from "./REPL";
+import { REPLFunction } from "./REPLFunctions";
 
 interface REPLInputProps {
-  history: string[][];
-  setHistory: Dispatch<SetStateAction<string[][]>>;
+  history: [string, string | string[][]][];
+  setHistory: Dispatch<SetStateAction<[string, string | string[][]][]>>;
   setOutputMode: Dispatch<SetStateAction<boolean>>;
   commandMap: Map<string, REPLFunction>;
 }
-
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
 export function REPLInput(props: REPLInputProps) {
@@ -24,10 +23,15 @@ export function REPLInput(props: REPLInputProps) {
 
   function handleSubmit(commandString: string) {
     const commandArray = commandString.trim().split(" ");
-
-    // Check if no command was specified
     const command = commandArray[0].toLowerCase();
-    if (command == "") {
+    let args = commandArray.slice(1, commandArray.length);
+    // prevent case sensitivity issues
+    for (var i = 0; i < args.length; i++) {
+      args[i] = args[i].toLowerCase();
+    }
+
+// Check if no command was specified
+    if (commandArray[0] == "") {
       props.setHistory([
         ...props.history,
         [commandString, "Please specify a command!"],
@@ -35,35 +39,41 @@ export function REPLInput(props: REPLInputProps) {
     }
     // Check if the mode was changed
     else if (command == "mode") {
-      if (
-        commandArray.length != 2 ||
-        !(commandArray[1].toLowerCase() == "verbose" || commandArray[1].toLowerCase() == "brief")
-      ) {
+      if (commandArray.length != 2 ||
+        !(args[0] == "verbose" || args[0] == "brief")) {
         props.setHistory([
           ...props.history,
           [commandString, "Usage: mode <verbose> OR mode <brief>."],
         ]);
       } else {
-        const output = "Mode updated: " + commandArray[1] + "!";
+        const output = "Mode updated: " + args[0] + "!";
         props.setHistory([...props.history, [commandString, output]]);
-        props.setOutputMode(commandArray[1] == "brief");
+        props.setOutputMode((args[0] == "brief"));
       }
     }
     // Otherwise use the given function.
     else {
-      const result = props.commandMap.get(commandArray[0]);
-      if (result != null) {
-        const output = result(["test"]);
-        props.setHistory([...props.history, [commandString, output]]);
-      } else {
-        props.setHistory([
-          ...props.history,
-          [commandString, "Invalid Command!"],
-        ]);
-      }
+      handleCommands(command, args);
     }
 
     setCommandString("");
+  }
+
+
+  /**
+   * Helper function to call the correct commands based on user input
+   * @param command The command entered by the user
+   * @param args The arguments of the command
+   */
+  function handleCommands(command: string, args: string[]) {
+    const result = props.commandMap.get(command);
+    if (result != null) {
+      const output = result(args);
+      props.setHistory([...props.history, [commandString, output]]);
+    }
+    else {
+      props.setHistory([...props.history, [commandString, "Invalid Command!"]]);
+    }
   }
 
   return (
