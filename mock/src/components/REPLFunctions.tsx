@@ -43,7 +43,13 @@ export function REPLFunctions(props: REPLFunctionsProps) {
       return 'No file loaded. Try "load <filepath>"!';
     }
 
-    return "temporary view results";
+    const mockview = [
+      ["1", "2", "3"],
+      ["4", "5", "6"],
+      ["7", "8", "9"],
+    ];
+
+    return mockview;
   };
 
   // Add desired commands to the command map.
