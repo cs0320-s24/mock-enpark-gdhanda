@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
-
+import { REPLFunctions } from "./REPLFunctions";
 /* 
   You'll want to expand this component (and others) for the sprints! Remember 
   that you can pass "props" as function arguments. If you need to handle state 
@@ -11,24 +11,11 @@ import { REPLInput } from "./REPLInput";
   This is a great top level component for the REPL. It's a good idea to have organize all components in a component folder.
   You don't need to do that for this gearup.
 */
-export interface REPLFunction {
-  (args: Array<string>): string;
-}
 
 export default function REPL() {
   const [historyList, setHistoryList] = useState<string[][]>([]);
   const [outputMode, setOutputMode] = useState<boolean>(true);
-  const [commandMap, setCommandMap] = useState<Map<string, REPLFunction>>(
-    new Map()
-  );
-
-  // For testing, create a basic command that returns a string and implements the interface.
-  const testCommand: REPLFunction = (args: string[]) => {
-    return "test command omg";
-  };
-
-  // Add the testing command to the command map.
-  commandMap.set("test", testCommand);
+  const commandMap = REPLFunctions();
 
   return (
     <div className="repl">

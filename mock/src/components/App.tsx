@@ -8,9 +8,9 @@ import REPL from "./REPL";
  */
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  let headerHeight = "100vh";
+  let headerHeight = "98vh";
   if (isLoggedIn) {
-    headerHeight = "215px";
+    headerHeight = "26vh";
   }
   return (
     <div className="App">
