@@ -19,7 +19,7 @@ export function REPLFunctions(props: REPLFunctionsProps) {
    */
   const loadCommand: REPLFunction = (args: string[]) => {
     if (args.length != 1) {
-      return "Invalid load argument! Usage: load <filepath>.";
+      return "Invalid load arguments! Usage: load <filepath>.";
     }
     // If successful (add later)
     props.setFileLoaded(true);
@@ -38,7 +38,7 @@ export function REPLFunctions(props: REPLFunctionsProps) {
 
   const viewCommand: REPLFunction = (args: string[]) => {
     if (args.length != 0) {
-      return "Invalid search arguments! Usage: view.";
+      return "Invalid view arguments! Usage: view.";
     } else if (!props.fileLoaded) {
       return 'No file loaded. Try "load <filepath>"!';
     }
