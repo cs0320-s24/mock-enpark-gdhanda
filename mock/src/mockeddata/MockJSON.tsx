@@ -1,6 +1,5 @@
 export function MockCSVFiles() {
   const files = new Map();
-  const results = new Map();
 
   // Basic csv with numbers no header.
   files.set("numbers-basic.csv", [
@@ -31,14 +30,21 @@ export function MockCSVFiles() {
     ["Julian", "Madan", "Dhanda"],
   ]);
 
-  // put mock search results in the results map
-   results.set("numbers-basic.csv", [["1", "2", "3"]]);
-   results.set("numbers-basic.csv/bycol", []);
+  // return list with the files and result maps
+  return files;
+}
 
-   results.set("people-header.csv", [
-     ["Gavin", "Raj", "Dhanda"],
-     ["Eleanor", "Nah", "Park"],
-   ]);
+export function MockCSVSearch() {
+  const results = new Map();
+
+  // put mock search results in the results map
+  results.set("numbers-basic.csv", [["1", "2", "3"]]);
+  results.set("numbers-basic.csv/bycol", []);
+
+  results.set("people-header.csv", [
+    ["Gavin", "Raj", "Dhanda"],
+    ["Eleanor", "Nah", "Park"],
+  ]);
   results.set("people-header.csv/bycol", [
     ["Julian", "Madan", "Dhanda"],
     ["Adelle", "Kristyna", "Dhanda"],
@@ -55,7 +61,6 @@ export function MockCSVFiles() {
     ["Julian", "Madan", "Dhanda"],
   ]);
 
-
   // return list with the files and result maps
-  return [files, results];
+  return results;
 }

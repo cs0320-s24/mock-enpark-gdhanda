@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MockCSVFiles } from "../mockeddata/MockJSON";
+import { MockCSVFiles, MockCSVSearch } from "../mockeddata/MockJSON";
 
 export interface REPLFunction {
   (args: Array<string>): string | string[][];
@@ -7,7 +7,8 @@ export interface REPLFunction {
 
 export function REPLFunctions() {
   const commandMap = new Map();
-  const mockedCSV = MockCSVFiles();
+  const mockedCSVFiles = MockCSVFiles();
+  const mockedSearchResults = MockCSVSearch();
   const [fileLoaded, setFileLoaded] = useState<boolean>(false);
   const [hasHeader, setHasHeader] = useState<boolean>(false);
   const [filePath, setFilePath] = useState<string>("");
@@ -27,7 +28,7 @@ export function REPLFunctions() {
       return "Invalid input for <has-header>! Valid inputs: 'true', 'false'.";
     }
 
-    if (mockedCSV[0].has(args[0])) {
+    if (mockedCSVFiles.has(args[0])) {
       setFileLoaded(true);
       setFilePath(args[0]);
       setHasHeader(args[1] == "true");
@@ -44,15 +45,15 @@ export function REPLFunctions() {
     }
     let results;
     if (args.length == 2) {
-      results = mockedCSV[1].get(filePath + "/bycol")
+      results = mockedSearchResults.get(filePath + "/bycol");
     } else {
-      results = mockedCSV[1].get(filePath);
+      results = mockedSearchResults.get(filePath);
     }
     // notify users if value isn't found
     if (results.length == 0) {
       return 'Value not found in "' + filePath + '"!';
     }
-    return results
+    return results;
     // I added a hasHeader variable to track if the currently loaded file has a header
     // but not sure if at all we need to use it here...
 
@@ -65,7 +66,7 @@ export function REPLFunctions() {
     } else if (!fileLoaded) {
       return 'No file loaded. Try "load <filepath> <has-header>"!';
     }
-    return mockedCSV[0].get(filePath);
+    return mockedCSVFiles.get(filePath);
   };
 
   // Add desired commands to the command map.
