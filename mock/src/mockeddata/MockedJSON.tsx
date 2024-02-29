@@ -1,3 +1,8 @@
+/*
+A basic function to build a map of mocked csv files. The map has keys that are 
+strings, and maps to either a string (on error) or a 2D array of strings (on success), 
+mirroring the possible outputs for any command in this interface.
+*/
 export function MockCSVFiles() {
   const files = new Map();
 
@@ -37,21 +42,26 @@ export function MockCSVFiles() {
   );
   files.set("empty-file.csv", "The csv file was empty! No Data available.");
 
-  // return map with files
+  // Return map with files.
   return files;
 }
 
+/*
+A basic function to build a map of mocked search results. The map has keys that are 
+strings, and maps to either a string (on error) or a 2D array of strings (on success), 
+mirroring the possible outputs for any command in this interface.
+*/
 export function MockCSVSearch() {
   const results = new Map();
 
-  // mock search results for the numbers csv, which has no header
+  // Mock search results for the numbers csv, which has no header.
   results.set("2", [["1", "2", "3"]]); // Search all for "2"
   results.set("header,1", "Error: CSV file does not have a header row!"); // Specify header
   results.set("0,1", [["1", "2", "3"]]); // Specify search column
   results.set("0,3", "Value not found in specified column!"); // Val not found col
   results.set("10", "Value not found in file!"); // Val not found any
 
-  // mock search results for the people csv, which has a header
+  // Mock search results for the people csv, which has a header.
   results.set("raj", [
     // Search all for "Raj"
     ["Gavin", "Raj", "Dhanda"],
@@ -66,8 +76,8 @@ export function MockCSVSearch() {
     ["Michelle", "Kral", "Dhanda"],
   ]);
   results.set("nick-name,gavin", "Error: Header not found!"); // Invalid header specified
-  results.set("10, eleanor", "Error: Index out of range for loaded CSV file!"); // Invalid index
+  results.set("10,eleanor", "Error: Index out of range for loaded CSV file!"); // Invalid index
 
-  // return map with results
+  // Return map with results.
   return results;
 }
