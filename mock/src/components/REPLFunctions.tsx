@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MockCSVFiles } from "../mockeddata/MockedJSON";
+import { MockCSVFiles } from "../mockeddata/MockJSON";
 
 export interface REPLFunction {
   (args: Array<string>): string | string[][];
@@ -7,7 +7,7 @@ export interface REPLFunction {
 
 export function REPLFunctions() {
   const commandMap = new Map();
-  const mockedFiles = MockCSVFiles();
+  const mockedCSV = MockCSVFiles();
   const [fileLoaded, setFileLoaded] = useState<boolean>(false);
   const [hasHeader, setHasHeader] = useState<boolean>(false);
   const [filePath, setFilePath] = useState<string>("");
@@ -27,7 +27,7 @@ export function REPLFunctions() {
       return "Invalid input for <has-header>! Valid inputs: 'true', 'false'.";
     }
 
-    if (mockedFiles.has(args[0])) {
+    if (mockedCSV[0].has(args[0])) {
       setFileLoaded(true);
       setFilePath(args[0]);
       setHasHeader(args[1] == "true");
@@ -37,16 +37,26 @@ export function REPLFunctions() {
   };
 
   const searchCommand: REPLFunction = (args: string[]) => {
-    if (args.length != 2) {
-      return "Invalid search arguments! Usage: search <column> <value>.";
+    if (args.length < 1 || args.length > 2) {
+      return "Invalid search arguments! Usage: search <column (optional)> <value>.";
     } else if (!fileLoaded) {
       return 'No file loaded. Try "load <filepath> <has-header>"!';
     }
+    let results;
+    if (args.length == 2) {
+      results = mockedCSV[1].get(filePath + "/bycol")
+    } else {
+      results = mockedCSV[1].get(filePath);
+    }
+    // notify users if value isn't found
+    if (results.length == 0) {
+      return 'Value not found in "' + filePath + '"!';
+    }
+    return results
     // I added a hasHeader variable to track if the currently loaded file has a header
     // but not sure if at all we need to use it here...
 
     // update with mocking functionality
-    return "temporary search results";
   };
 
   const viewCommand: REPLFunction = (args: string[]) => {
@@ -55,8 +65,7 @@ export function REPLFunctions() {
     } else if (!fileLoaded) {
       return 'No file loaded. Try "load <filepath> <has-header>"!';
     }
-
-    return mockedFiles.get(filePath);
+    return mockedCSV[0].get(filePath);
   };
 
   // Add desired commands to the command map.
