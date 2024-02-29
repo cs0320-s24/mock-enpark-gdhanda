@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MockCSVFiles, MockCSVSearch } from "../mockeddata/MockJSON";
+import { MockCSVFiles, MockCSVSearch } from "../mockeddata/MockedJSON";
 
 export interface REPLFunction {
   (args: Array<string>): string | string[][];
@@ -50,17 +50,12 @@ export function REPLFunctions() {
     } else if (!fileLoaded) {
       return 'No file loaded. Try "load <filepath> <has-header>"!';
     }
-    let results;
-    if (args.length == 2) {
-      results = mockedSearchResults.get(filePath + "/bycol");
-    } else {
-      results = mockedSearchResults.get(filePath);
+
+    // Check if value present in mocked data
+    if (mockedSearchResults.has(args.toString())) {
+      return mockedSearchResults.get(args.toString());
     }
-    // notify users if value isn't found
-    if (results.length == 0) {
-      return 'Value not found in "' + filePath + '"!';
-    }
-    return results;
+    return "Invalid search query: no response found for: " + args.toString();
   };
 
   const viewCommand: REPLFunction = (args: string[]) => {
