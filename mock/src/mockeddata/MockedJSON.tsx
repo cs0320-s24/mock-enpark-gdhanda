@@ -1,7 +1,9 @@
-/*
-A basic function to build a map of mocked csv files. The map has keys that are 
-strings, and maps to either a string (on error) or a 2D array of strings (on success), 
-mirroring the possible outputs for any command in this interface.
+/**
+* A basic function to build a map of mocked csv files. The map has keys that are 
+* strings, and maps to either a string (on error) or a 2D array of strings (on success), 
+* mirroring the possible outputs for any command in this interface.
+* 
+* @returns a map of mocked csv files.
 */
 export function MockCSVFiles() {
   const files = new Map();
@@ -46,10 +48,12 @@ export function MockCSVFiles() {
   return files;
 }
 
-/*
-A basic function to build a map of mocked search results. The map has keys that are 
-strings, and maps to either a string (on error) or a 2D array of strings (on success), 
-mirroring the possible outputs for any command in this interface.
+/**
+* A basic function to build a map of mocked search results. The map has keys that are 
+* strings, and maps to either a string (on error) or a 2D array of strings (on success), 
+* mirroring the possible outputs for any command in this interface.
+* 
+* @returns a map of mocked search data.
 */
 export function MockCSVSearch() {
   const results = new Map();
