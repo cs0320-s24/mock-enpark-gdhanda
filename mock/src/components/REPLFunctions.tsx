@@ -28,11 +28,18 @@ export function REPLFunctions() {
       return "Invalid input for <has-header>! Valid inputs: 'true', 'false'.";
     }
 
+    // Check if the file exists
     if (mockedCSVFiles.has(args[0])) {
-      setFileLoaded(true);
-      setFilePath(args[0]);
-      setHasHeader(args[1] == "true");
-      return 'Successfully loaded file from "' + args[0] + '"!';
+      // Check whether data or an error message was given
+      if (typeof mockedCSVFiles.get(args[0]) === "string") {
+        return mockedCSVFiles.get(args[0]);
+      } else {
+        // Update file data as appropriate
+        setFileLoaded(true);
+        setFilePath(args[0]);
+        setHasHeader(args[1] == "true");
+        return 'Successfully loaded file from "' + args[0] + '"!';
+      }
     }
     return 'Could not load file from "' + args[0] + '"!';
   };
@@ -54,10 +61,6 @@ export function REPLFunctions() {
       return 'Value not found in "' + filePath + '"!';
     }
     return results;
-    // I added a hasHeader variable to track if the currently loaded file has a header
-    // but not sure if at all we need to use it here...
-
-    // update with mocking functionality
   };
 
   const viewCommand: REPLFunction = (args: string[]) => {

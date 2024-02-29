@@ -30,7 +30,14 @@ export function MockCSVFiles() {
     ["Julian", "Madan", "Dhanda"],
   ]);
 
-  // return list with the files and result maps
+  // Edge cases for empty and malformed csv data.
+  files.set(
+    "malformed-file.csv",
+    "The csv file was malformed! Data not loaded."
+  );
+  files.set("empty-file.csv", "The csv file was empty! No Data available.");
+
+  // return map with files
   return files;
 }
 
@@ -61,6 +68,6 @@ export function MockCSVSearch() {
     ["Julian", "Madan", "Dhanda"],
   ]);
 
-  // return list with the files and result maps
+  // return map with results
   return results;
 }
