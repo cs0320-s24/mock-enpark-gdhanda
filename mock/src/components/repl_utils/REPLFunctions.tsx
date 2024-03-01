@@ -1,23 +1,23 @@
 import { useState } from "react";
-import { MockCSVFiles, MockCSVSearch } from "../mockeddata/MockedJSON";
+import { MockCSVFiles, MockCSVSearch } from "../../mockeddata/MockedJSON";
 
 /**
-* An interface for a command in the REPL, allowing for developer extensibility beyond
-* the capabilities of our interface.
-* 
-* @args an array of strings representing the user input.
-* @returns either a string or a 2D string array as an output response.
-*/
+ * An interface for a command in the REPL, allowing for developer extensibility beyond
+ * the capabilities of our interface.
+ *
+ * @args an array of strings representing the user input.
+ * @returns either a string or a 2D string array as an output response.
+ */
 export interface REPLFunction {
   (args: string[]): string | string[][];
 }
 
 /**
-* A function to build a map of commands for CSV functionality. Defines REPLFunctions for
-* load_file, search and view, and adds them to a Map from string (command name) to REPLFunction.
-* 
-* @returns a map from command name to REPLFunction.
-*/
+ * A function to build a map of commands for CSV functionality. Defines REPLFunctions for
+ * load_file, search and view, and adds them to a Map from string (command name) to REPLFunction.
+ *
+ * @returns a map from command name to REPLFunction.
+ */
 export function REPLFunctions() {
   const commandMap = new Map(); // The commands used in our implementation.
   const mockedCSVFiles = MockCSVFiles(); // Mocked csv files from MockedJSON.tsx
@@ -102,6 +102,6 @@ export function REPLFunctions() {
   commandMap.set("load_file", loadCommand);
   commandMap.set("search", searchCommand);
   commandMap.set("view", viewCommand);
-  
+
   return commandMap;
 }

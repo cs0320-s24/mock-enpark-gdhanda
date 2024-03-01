@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../styles/App.css";
-import { LoginButton } from "./LoginButton";
+import { LoginButton } from "./user_interaction/LoginButton";
 import REPL from "./REPL";
 
 /**
