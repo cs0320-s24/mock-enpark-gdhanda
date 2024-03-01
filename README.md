@@ -27,9 +27,13 @@ There may also be some visual aspects that do not behave as desired, specificall
 
 # Tests
 
-This project contains an extensive end-to-end testing suite...
+This project contains an extensive end-to-end testing suite. The App.spec.ts file tests overall functionality, like loading the page, logging in, and seeing the correct buttons and titles. The Functions.spec.ts file tests each of our commands, including mode, load, view, and search. For each of these commands, we test edge cases such as missing/incorrect arguments and case sensitivity/extra white space.
 
-As far as unit testing, we chose not to implement any such tests. This was because many of the functions that would require unit testing are implemented in the backend, which we have not yet integrated.
+For load, we tested loading and reloading files, ensuring that the correct success or failure message is given to the user. For search and view, we tested that the expected output, in the form of HTML tables, was produced and that the rows contained their expected values. We also check that a file is loaded before view/search. For search specifically, we included tests for different search types——by column index, column header, no index/header, invalid index/header, unfound values——and make sure they return their respective success/error messages.
+
+We also created numerous tests that integrated multiple commands to ensure that they are able to work sequentially, such as loading, reloading, and searching or switching mode then viewing.
+
+As far as unit testing, we chose not to implement any such tests. This was because many of the functions that would require unit testing are implemented in the backend, which we have not yet integrated. Other functions included useState hooks so they were unable to be run as part of a unit test.
 
 # How To
 
