@@ -1,35 +1,16 @@
 import { expect, test } from "@playwright/test";
 
 
-/**
-  The general shapes of tests in Playwright Test are:
-    1. Navigate to a URL
-    2. Interact with the page
-    3. Assert something about the page against your expectations
-  Look for this pattern in the tests below!
- */
+test.beforeEach(async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+});
 
-// If you needed to do something before every test case...
-test.beforeEach(() => {
-    // ... you'd put it here.
-    // TODO: Is there something we need to do before every test case to avoid repeating code?
-  })
-
-/**
- * Don't worry about the "async" yet. We'll cover it in more detail
- * for the next sprint. For now, just think about "await" as something 
- * you put before parts of your test that might take time to run, 
- * like any interaction with the page.
- */
 test('on page load, i see a login button', async ({ page }) => {
-  // Notice: http, not https! Our front-end is not set up for HTTPs.
   await page.goto('http://localhost:8000/');
   await expect(page.getByLabel('Login')).toBeVisible()
 })
 
 test('on page load, i dont see the input box until login', async ({ page }) => {
-  // Notice: http, not https! Our front-end is not set up for HTTPs.
-  await page.goto('http://localhost:8000/');
   await expect(page.getByLabel('Sign Out')).not.toBeVisible()
   await expect(page.getByLabel('Command input')).not.toBeVisible()
   
@@ -39,30 +20,52 @@ test('on page load, i dont see the input box until login', async ({ page }) => {
   await expect(page.getByLabel('Command input')).toBeVisible()
 })
 
+test('i can sign in and sign out repeatedly', async ({ page }) => {
+  await page.getByLabel("Login").click();
+  await expect(page.getByLabel("Sign Out")).toBeVisible();
+  await expect(page.getByLabel("Command input")).toBeVisible();
+
+  await page.getByLabel("Sign Out").click();
+  await expect(page.getByLabel("Login")).toBeVisible();
+
+  await page.getByLabel("Login").click();
+  await expect(page.getByLabel("Sign Out")).toBeVisible();
+  await expect(page.getByLabel("Command input")).toBeVisible();
+})
+
 test('after I type into the input box, its text changes', async ({ page }) => {
-  // Step 1: Navigate to a URL
-  await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
-
-  // Step 2: Interact with the page
-  // Locate the element you are looking for
   await page.getByLabel('Command input').click();
-  await page.getByLabel('Command input').fill('Awesome command');
+  await page.getByLabel('Command input').fill('load something');
 
-  // Step 3: Assert something about the page
-  // Assertions are done by using the expect() function
-  const mock_input = `Awesome command`
+  let mock_input = `load something`
   await expect(page.getByLabel('Command input')).toHaveValue(mock_input)
+
+  // test really long input that goes off screen
+  await page
+    .getByLabel("Command input")
+    .fill(
+      "akjg alrjglj;rboiljf;boiajf;boijf;oibja;oifgbj;aoifbj;oifgj;aoifjb;iaj;agikjf;iogjuao;irguj;oiraug;irut;iourio;;aiodfh;ufhbujak;fhugbujfhg;iuahg;ioaurhjf;oijer;oafihji;eoahf;ioe;fh"
+    );
+  mock_input =
+    "akjg alrjglj;rboiljf;boiajf;boijf;oibja;oifgbj;aoifbj;oifgj;aoifjb;iaj;agikjf;iogjuao;irguj;oiraug;irut;iourio;;aiodfh;ufhbujak;fhugbujfhg;iuahg;ioaurhjf;oijer;oafihji;eoahf;ioe;fh";
+  await expect(page.getByLabel("Command input")).toHaveValue(mock_input);
 });
 
-test('on page load, i see a button', async ({ page }) => {
-  // TODO WITH TA: Fill this in!
-});
+test('i can submit input with a button', async ({ page }) => {
+  await page.getByLabel("Login").click();
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load something");
+  await page.getByLabel("Submit").click();
 
-test('after I click the button, its label increments', async ({ page }) => {
-  // TODO WITH TA: Fill this in to test your button counter functionality!
-});
+  await expect(page.getByLabel('Command input')).not.toHaveValue("load something")
+  await expect(page.getByLabel("Command input")).toHaveValue("");
 
-test('after I click the button, my command gets pushed', async ({ page }) => {
-  // TODO: Fill this in to test your button push functionality!
+  // refill and resubmit
+  await page.getByLabel("Command input").fill("load something again");
+  await page.getByLabel("Submit").click();
+  await expect(page.getByLabel("Command input")).not.toHaveValue(
+    "load something again"
+  );
+  await expect(page.getByLabel("Command input")).toHaveValue("");
 });
