@@ -1,27 +1,35 @@
 import "../styles/main.css";
 import { Dispatch, SetStateAction } from "react";
 
+/**
+ * An interface to store props for the ControlledInput component.
+ * 
+ * @param value the string contained in the input box.
+ * @param setValue a setter for the value string.
+ * @param ariaLabel the aria label to use for the input box. 
+ */
 interface ControlledInputProps {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   ariaLabel: string;
 }
 
-// Input boxes contain state. We want to make sure React is managing that state,
-//   so we have a special component that wraps the input box.
-export function ControlledInput({
-  value,
-  setValue,
-  ariaLabel,
-}: ControlledInputProps) {
+/**
+ * A component that wraps the Input Box, to ensure that React is properly 
+ * managing its state.
+ * 
+ * @param props an interface defined above with relevant Input variables.
+ * @returns An input box with the appropriate values for our REPL interface.
+ */
+export function ControlledInput(props: ControlledInputProps) {
   return (
     <input
       type="text"
       className="repl-command-box"
-      value={value}
+      value={props.value}
       placeholder="Enter command here!"
-      onChange={(ev) => setValue(ev.target.value)}
-      aria-label={ariaLabel}
+      onChange={(ev) => props.setValue(ev.target.value)}
+      aria-label={props.ariaLabel}
     ></input>
   );
 }
