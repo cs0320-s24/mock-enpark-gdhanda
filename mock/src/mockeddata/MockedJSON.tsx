@@ -42,7 +42,7 @@ export function MockCSVFiles() {
     "malformed-file.csv",
     "The csv file was malformed! Data not loaded."
   );
-  files.set("empty-file.csv", "The csv file was empty! No Data available.");
+  files.set("empty-file.csv", "The csv file was empty! No data available.");
 
   // Return map with files.
   return files;

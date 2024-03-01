@@ -144,6 +144,7 @@ test('i can load a new file and see a new file', async ({ page }) => {
     .getByLabel("Command input")
     .fill("load_file people-header.csv true");
   await page.getByLabel("Submit").click();
+
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("view");
   await page.getByLabel("Submit").click();
@@ -154,31 +155,169 @@ test('i can load a new file and see a new file', async ({ page }) => {
   await expect(page.getByLabel("data row").nth(4)).toHaveText("GavinRajDhanda");
 });
 
-// test('if i search with invalid arguments, i get an error', async ({ page }) => {
-// });
+test('if i search with invalid arguments, i get an error', async ({ page }) => {
+  // too many
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file numbers-basic.csv ");
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search too many args");
+  await page.getByLabel("Submit").click();
 
-// test('if i search with invalid arguments, i get an error', async ({ page }) => {
   // no args
-  // too many args
-  // nonsensical args
-// });
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search");
+  await page.getByLabel("Submit").click();
+  await expect(
+    page.getByText(
+      "Invalid search arguments! Usage: search <column (optional)> <value>."
+    )
+  ).toHaveCount(2);
 
-// test('i can search a csv by column and not', async ({ page }) => {
-// });
+});
 
-// test('if there are no search results, i get a message', async ({ page }) => {
-// });
+test('i can search a csv', async ({ page }) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file numbers-basic.csv false");
+  await page.getByLabel("Submit").click();
 
-// test('i can search by column index and header', async ({ page }) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search 2");
+  await page.getByLabel("Submit").click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search 0 1");
+  await page.getByLabel("Submit").click();
+
+  await expect(page.getByLabel("data row").first()).toHaveText("123");
+  await expect(page.getByLabel("data row").nth(1)).toHaveText("123");
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file people-header.csv true");
+  await page.getByLabel("Submit").click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search raj");
+  await page.getByLabel("Submit").click();
+  await expect(page.getByLabel("data row").nth(2)).toHaveText("GavinRajDhanda");
+  await expect(page.getByLabel("data row").nth(3)).toHaveText("RajDhanda");
+});
+
+test('if there are no search results, i get a message', async ({ page }) => {
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file numbers-basic.csv false");
+  await page.getByLabel("Submit").click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search 10");
+  await page.getByLabel("Submit").click();
+  await expect(
+    page.getByText("Value not found in file!")
+  ).toBeVisible();
+
+  // specific column
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search 0 3");
+  await page.getByLabel("Submit").click();
+  await expect(
+    page.getByText("Value not found in specified column!")
+  ).toBeVisible();
+});
+
+test('i can search by column header', async ({ page }) => {
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file people-header.csv true");
+  await page.getByLabel("Submit").click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search last-name dhanda");
+  await page.getByLabel("Submit").click();
+  await expect(page.getByLabel("data row").nth(0)).toHaveText("JulianMadanDhanda");
+  await expect(page.getByLabel("data row").nth(4)).toHaveText("MichelleKralDhanda");
+});
+
+test('invalid columns and headers throw an error', async({ page}) => {
+  // no header row
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file numbers-basic.csv false");
+  await page.getByLabel("Submit").click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search header 1");
+  await page.getByLabel("Submit").click();
+  await expect(
+    page.getByText("Error: CSV file does not have a header row!")
+  ).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file people-header.csv true");
+  await page.getByLabel("Submit").click();
+
+  // invalid header
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search nick-name gavin");
+  await page.getByLabel("Submit").click();
+  await expect(page.getByText("Error: Header not found!")).toBeVisible();
+
   // invalid column
-// });
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search 10 eleanor");
+  await page.getByLabel("Submit").click();
+  await expect(
+    page.getByText("Error: Index out of range for loaded CSV file!")
+  ).toBeVisible();
+});
 
-// test('i can load a new file and search it', async ({ page }) => {
-// });
+test('i can load a new file and search it', async ({ page }) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file numbers-basic.csv false");
+  await page.getByLabel("Submit").click();
 
-// test('i can load, search, view sequentially', async ({ page }) => {
-// });
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file people-header.csv true");
+  await page.getByLabel("Submit").click();
 
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search raj");
+  await page.getByLabel("Submit").click();
+  await expect(page.getByLabel("data row").nth(0)).toHaveText(
+    "GavinRajDhanda"
+  );
+});
+
+test('i can load, search, view sequentially', async ({ page }) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file people-header.csv false");
+  await page.getByLabel("Submit").click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("view");
+  await page.getByLabel("Submit").click();
+  await expect(page.getByLabel("data row").nth(0)).toHaveText("First-NameMiddle-NameLast-Name");
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search raj");
+  await page.getByLabel("Submit").click();
+  await expect(page.getByLabel("data row").nth(8)).toHaveText(
+    "GavinRajDhanda");
+});
+
+test('i get an error for invalid csvs', async ({ page }) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file malformed-file.csv false");
+  await page.getByLabel("Submit").click();
+  await expect(
+    page.getByText("The csv file was malformed! Data not loaded.")
+  ).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file empty-file.csv false");
+  await page.getByLabel("Submit").click();
+  await expect(
+    page.getByText("The csv file was empty! No data available.")
+  ).toBeVisible();
+});
 
 test('i can switch modes and it starts in brief mode', async ({ page }) => {
   // start with brief so command: hello is not visible
@@ -245,4 +384,3 @@ test("if i use capital letters and add extra whitespace, commands still work", a
   await expect(page.getByText("Mode updated: verbose!")).toBeVisible();
   await expect(page.getByText('Successfully loaded file from "numbers-basic.csv"!')).toBeVisible();
 });
-

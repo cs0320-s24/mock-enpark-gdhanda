@@ -25,7 +25,7 @@ function formatOutput(command: string | string[][]) {
 
 export function REPLHistory(props: REPLHistoryProps) {
   return (
-    <div className="repl-history" >
+    <div className="repl-history">
       {props.history.map((command) =>
         props.outputMode ? (
           <p> {formatOutput(command[1])} </p>
