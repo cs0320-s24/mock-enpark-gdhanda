@@ -1,4 +1,4 @@
-import "../styles/repl.css";
+import "../../styles/repl.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "../user_interaction/ControlledInput";
 import { REPLFunction } from "./REPLFunctions";

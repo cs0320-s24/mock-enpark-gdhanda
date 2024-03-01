@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import "../styles/main.css";
+import "../../styles/main.css";
 
 /**
  * An interface to store props for the LoginButton component.
