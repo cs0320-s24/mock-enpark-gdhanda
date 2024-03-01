@@ -9,10 +9,13 @@
 }
 
 .repl-history {
+  padding-left: 15px;
+  padding-right: 15px;
   height: 55vh;
   margin: auto;
   display: block;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-wrap: break-word;
 }
 
 .repl-history table {
