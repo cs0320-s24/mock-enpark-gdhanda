@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "../styles/main.css";
-import { REPLHistory } from "./REPLHistory";
-import { REPLInput } from "./REPLInput";
-import { REPLFunctions } from "./REPLFunctions";
+import { REPLHistory } from "./repl_utils/REPLHistory";
+import { REPLInput } from "./repl_utils/REPLInput";
+import { REPLFunctions } from "./repl_utils/REPLFunctions";
 
 /**
  * A high-level component for the REPL user interface. Stores high level data that
