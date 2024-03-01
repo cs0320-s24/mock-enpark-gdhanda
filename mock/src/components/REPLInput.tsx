@@ -22,12 +22,13 @@ export function REPLInput(props: REPLInputProps) {
    */
 
   function handleSubmit(commandString: string) {
-    const commandArray = commandString.trim().split(" ");
+    const commandArray = commandString.trim().split(/\s+/);
     const command = commandArray[0].toLowerCase();
     let args = commandArray.slice(1, commandArray.length);
     // prevent case sensitivity issues
+    console.log(args)
     for (var i = 0; i < args.length; i++) {
-      args[i] = args[i].toLowerCase();
+      args[i] = args[i].toLowerCase().trim();
     }
 
     // Check if no command was specified
