@@ -9,10 +9,10 @@ function formatOutput(command: string | string[][]) {
   return typeof command === "string" ? (
     command
   ) : (
-    <table>
+    <table aria-label="output data">
       <tbody>
         {command.map((row) => (
-          <tr>
+          <tr aria-label="data row">
             {row.map((col) => (
               <td>{col}</td>
             ))}
@@ -24,16 +24,16 @@ function formatOutput(command: string | string[][]) {
 }
 
 export function REPLHistory(props: REPLHistoryProps) {
-  // return with only output showing
   return (
-    <div className="repl-history">
+    <div className="repl-history" >
       {props.history.map((command) =>
         props.outputMode ? (
           <p> {formatOutput(command[1])} </p>
         ) : (
           <p>
-            <b>{"Command:"}</b> {command[0]} <br></br>
-            <b>{"Output:"}</b> {formatOutput(command[1])}
+            <b>{"Command: "}</b> {command[0]} <br></br>
+            <b>{"Output: "}</b>
+            {formatOutput(command[1])}
           </p>
         )
       )}
