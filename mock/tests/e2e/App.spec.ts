@@ -36,9 +36,9 @@ test('i can sign in and sign out repeatedly', async ({ page }) => {
 test('after I type into the input box, its text changes', async ({ page }) => {
   await page.getByLabel('Login').click();
   await page.getByLabel('Command input').click();
-  await page.getByLabel('Command input').fill('load something');
+  await page.getByLabel('Command input').fill('load_file something');
 
-  let mock_input = `load something`
+  let mock_input = `load_file something`
   await expect(page.getByLabel('Command input')).toHaveValue(mock_input)
 
   // test really long input that goes off screen
@@ -55,7 +55,7 @@ test('after I type into the input box, its text changes', async ({ page }) => {
 test('i can submit input with a button', async ({ page }) => {
   await page.getByLabel("Login").click();
   await page.getByLabel("Command input").click();
-  await page.getByLabel("Command input").fill("load something");
+  await page.getByLabel("Command input").fill("load_file something");
   await page.getByLabel("Submit").click();
 
   await expect(page.getByLabel('Command input')).not.toHaveValue("load something")
@@ -68,4 +68,18 @@ test('i can submit input with a button', async ({ page }) => {
     "load something again"
   );
   await expect(page.getByLabel("Command input")).toHaveValue("");
+});
+
+test("if i log out then login, the history disappears", async ({ page }) => {
+  await page.getByLabel("Login").click();
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file numbers-basic.csv false");
+  await page.getByLabel("Submit").click();
+  await expect(page.getByText('Successfully loaded file from "numbers-basic.csv"!')).toBeVisible();
+
+  await page.getByLabel("Sign Out").click();
+  await page.getByLabel("Login").click();
+  await expect(
+    page.getByText('Successfully loaded file from "numbers-basic.csv"!')
+  ).not.toBeVisible();
 });

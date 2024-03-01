@@ -28,7 +28,7 @@ function formatOutput(command: string | string[][]) {
         {command.map((row) => (
           <tr aria-label="data row">
             {row.map((col) => (
-              <td>{col}</td>
+              <td aria-label="data column">{col}</td>
             ))}
           </tr>
         ))}
@@ -48,7 +48,7 @@ function formatOutput(command: string | string[][]) {
  */
 export function REPLHistory(props: REPLHistoryProps) {
   return (
-    <div className="repl-history">
+    <div className="repl-history" aria-label="Command History">
       {props.history.map((command) =>
         props.outputMode ? (
           <p> {formatOutput(command[1])} </p>
