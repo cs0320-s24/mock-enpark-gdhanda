@@ -93,15 +93,11 @@ test('if i search or view without a file loaded, i get an error', async ({ page 
 
   const count = await page
     .getByText(
-      'No file loaded. Try "load <filepath> <has-header>"!')
+      'No file loaded. Try "load_file <filepath> <has-header>"!')
     .count();
   expect(count).toBe(2);
 });
 
-<<<<<<< Updated upstream
-
-// test('if i use capital letters, commands still work',
-=======
 test('if i view with invalid arguments, i get an error', async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file numbers-basic.csv ");
@@ -112,7 +108,7 @@ test('if i view with invalid arguments, i get an error', async ({ page }) => {
     page.getByText("Invalid view arguments! Usage: view.")
   ).toBeVisible();
 });
->>>>>>> Stashed changes
+
 
 // test('if i view i see my loaded csv', async ({ page }) => {
 //   await page.getByLabel("Command input").click();
@@ -125,16 +121,6 @@ test('if i view with invalid arguments, i get an error', async ({ page }) => {
 //   ).toBeVisible();
 // });
 
-<<<<<<< Updated upstream
-// test('if i switch modes with no argument, it prompts me', async ({ page }) => {
-//   await page.getByLabel("Command input").click();
-//   await page.getByLabel("Command input").fill("mode");
-//   await page.getByLabel("Submit").click();
-//   await expect(page.getByText('Usage: mode <verbose> OR mode <brief>.')).toBeVisible();
-// });
-
-
-=======
 // test('i can load a new file and see a new file', async ({ page }) => {
 // });
 
@@ -213,4 +199,4 @@ test("if i use capital letters and add extra whitespace, commands still work", a
   await page.getByLabel("Command input").fill("ModE");
   await page.getByLabel("Submit").click();
 });
->>>>>>> Stashed changes
+
