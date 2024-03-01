@@ -14,7 +14,7 @@ export interface REPLFunction {
 
 /**
 * A function to build a map of commands for CSV functionality. Defines REPLFunctions for
-* load, search and view, and adds them to a Map from string (command name) to REPLFunction.
+* load_file, search and view, and adds them to a Map from string (command name) to REPLFunction.
 * 
 * @returns a map from command name to REPLFunction.
 */
@@ -29,13 +29,13 @@ export function REPLFunctions() {
   /**
    * An implementation of REPLFunction to handle loading csv files.
    *
-   * @param args the arguments inputted by the user. 2 args required for load.
+   * @param args the arguments inputted by the user. 2 args required for load_file.
    * @returns A string indicating whether the load was successful.
    */
   const loadCommand: REPLFunction = (args: string[]) => {
     // Check number of args.
     if (args.length != 2) {
-      return "Invalid load arguments! Usage: load <filepath> <has-header>.";
+      return "Invalid load_file arguments! Usage: load_file <filepath> <has-header>.";
     }
 
     // Check for valid has-header input (true or false).
@@ -99,7 +99,7 @@ export function REPLFunctions() {
   };
 
   // Add desired commands to the command map.
-  commandMap.set("load", loadCommand);
+  commandMap.set("load_file", loadCommand);
   commandMap.set("search", searchCommand);
   commandMap.set("view", viewCommand);
   

@@ -93,6 +93,7 @@ export function REPLInput(props: REPLInputProps) {
       <button
         className="submit-button"
         onClick={() => handleSubmit(commandString)}
+        aria-label={"Submit"}
       >
         <b>{"Submit!"}</b>
       </button>
